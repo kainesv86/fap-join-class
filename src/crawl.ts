@@ -49,9 +49,10 @@ const fapCheckSWP = async (fapPage: puppeteer.Page) => {
         const id = setInterval(async () => {
                 try {
                         await fapPage.select("#ctl00_mainContent_dllCourse", "27870");
+                        await fapPage.waitForTimeout(10000);
                         setTimeout(async () => {
                                 await fapPage.click("#ctl00_mainContent_btSave");
-                        }, 5000);
+                        }, 10000);
                 } catch (err) {
                         console.log(err);
                         clearInterval(id);
