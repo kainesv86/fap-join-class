@@ -35,6 +35,7 @@ async function bootCrawl() {
 
         await page.click("#loginform > center > div > div:nth-child(2) > div > div > div");
         const fapPage = await browser.newPage();
+        await fapPage.waitForTimeout(120000);
         await fapPage.on("dialog", async (dialog) => {
                 await dialog.accept();
         });
@@ -42,20 +43,22 @@ async function bootCrawl() {
 }
 
 const fapCheckSWP = async (fapPage: puppeteer.Page) => {
-        fapPage.goto("https://fap.fpt.edu.vn/FrontOffice/MoveSubject.aspx?id=20829");
+        console.log("Alo");
+        fapPage.goto("https://fap.fpt.edu.vn/FrontOffice/MoveSubject.aspx?id=27679");
 
         const id = setInterval(async () => {
                 try {
-                        await fapPage.select("#ctl00_mainContent_dllCourse", "20738");
-                        await fapPage.click("#ctl00_mainContent_btSave");
+                        await fapPage.select("#ctl00_mainContent_dllCourse", "27870");
+                        setTimeout(async () => {
+                                await fapPage.click("#ctl00_mainContent_btSave");
+                        }, 5000);
                 } catch (err) {
                         console.log(err);
                         clearInterval(id);
                         fapCheckSWP(fapPage);
                 }
-
-                fapPage.reload();
-        }, 10000);
+                await fapPage.reload();
+        }, 15000);
 };
 
 bootCrawl();
